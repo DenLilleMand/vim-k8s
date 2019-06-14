@@ -1,8 +1,8 @@
+echom("herpderp")
 if exists('g:loaded_k8s') || &cp || v:version < 700
   finish
 endif
 let g:loaded_k8s = 1
-echom("herpderp")
 
 let s:nvim = has('nvim')
 let s:async = has('job') && has('channel')
