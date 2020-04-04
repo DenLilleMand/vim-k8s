@@ -10,7 +10,7 @@ have a few options available:
 * `d` - describe the pod
 
 ![example](example.gif)
-herpderp
+daydayday
 
 ## Configuration
 
