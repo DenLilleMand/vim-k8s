@@ -7,6 +7,10 @@ if !exists('g:vim_k8s#shell')
     let g:vim_k8s#shell = 'bash'
 endif
 
+if !exists('g:vim_k8s#pager')
+    let g:vim_k8s#pager = 'less'
+endif
+
 function! vim_k8s#ListPods()
     let l:current_window = 0
     let l:create_new_list = ' '
@@ -27,11 +31,7 @@ function! vim_k8s#Describe()
 
     execute "normal! yW"
     let l:pattern = @"
-    if !exists('b:terminal_job_id')
-        echom 'This buffer is not a terminal.'
-        return
-    end
-    call system("kubectl describe pods " . l:pattern . "|less")
+    call system("kubectl describe pods " . l:pattern . "|" . l:vim_k8s#pager)
 
     call setreg(@", l:saved_reg, l:saved_reg_type)
 endfunction

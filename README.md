@@ -41,7 +41,16 @@ or
 let g:vim_k8s#shell = 'zsh'
 ```
 
-Most important is that the shell set, actually exists in the pod
+Most important is that the shell set, actually exists in the pod.
+
+It is possible to change the pager of the pod describe command by
+setting the global variable `vim_k8s#pager`
+
+```vimscript
+let g:vim_k8s#pager = 'more'
+```
+
+The default is `less`
 
 ## Install
 
@@ -59,6 +68,3 @@ This plugin assumes a working `kubectl` command available on your cmdline.
 It also assumes that kubectl has a default context set,
 that you wish to use there is no magic letting you
 select a different context when running the commands.
-
-The pod describe command assumes that you have `less` on your path.
-
