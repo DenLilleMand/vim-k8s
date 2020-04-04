@@ -3,21 +3,25 @@ if exists('g:loaded_k8s') || &cp || v:version < 700
 endif
 let g:loaded_k8s = 1
 
-function! ListPods()
+if !exists('g:vim_k8s#shell')
+    let g:vim_k8s#shell = 'bash'
+endif
+
+function! vim_k8s#ListPods()
     let l:current_window = 0
     let l:create_new_list = ' '
     let l:resource_list = systemlist('kubectl get pods')
     call setloclist(l:current_window, [], l:create_new_list, { 'lines' : l:resource_list, 'efm': '%f', 'title':'Pods'})
     call CmdLine("lopen<cr>")
 
-    nnoremap <buffer> <CR> :call CallKubectl('e')<CR>
-    nnoremap <buffer> e :call CallKubectl('e')<CR>
-    nnoremap <buffer> d :call Describe()<CR>
+    nnoremap <buffer> <CR> :call vim_k8s#CallKubectl('e')<CR>
+    nnoremap <buffer> e :call vim_k8s#CallKubectl('e')<CR>
+    nnoremap <buffer> d :call vim_k8s#Describe()<CR>
 
     setlocal nowrap
 endfunction
 
-function! Describe()
+function! vim_k8s#Describe()
     let l:saved_reg = @"
     let l:saved_reg_type = getregtype(@")
 
@@ -27,12 +31,12 @@ function! Describe()
         echom 'This buffer is not a terminal.'
         return
     end
-    call chansend(b:terminal_job_id, "kubectl describe pods " . l:pattern . "|less")
+    call system("kubectl describe pods " . l:pattern . "|less")
 
     call setreg(@", l:saved_reg, l:saved_reg_type)
 endfunction
 
-function! CallKubectl(action)
+function! vim_k8s#CallKubectl(action)
     let l:saved_reg = @"
     let l:saved_reg_type = getregtype(@")
 
@@ -47,10 +51,11 @@ function! CallKubectl(action)
     if a:action == "d"
         call chansend(b:terminal_job_id, "kubectl describe pods " . l:pattern . "\n")
     else
-        call chansend(b:terminal_job_id, "kubectl exec -it " . l:pattern . " bash\n")
+        call chansend(b:terminal_job_id, "kubectl exec -it " . l:pattern . g:vim_k8s#shell . "\n")
     endif
 
     call setreg(@", l:saved_reg, l:saved_reg_type)
 endfunction
 
-nnoremap <silent><unique> <leader>a  :call ListPods()<CR>
+nnoremap <silent> <Plug>(vim_k8s-listpods) :call vim_k8s#ListPods()<CR>
+
