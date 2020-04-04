@@ -12,9 +12,24 @@ function! ListPods()
 
     nnoremap <buffer> <CR> :call CallKubectl('e')<CR>
     nnoremap <buffer> e :call CallKubectl('e')<CR>
-    nnoremap <buffer> d :call CallKubectl('d')<CR>
+    nnoremap <buffer> d :call Describe()<CR>
 
     setlocal nowrap
+endfunction
+
+function! Describe()
+    let l:saved_reg = @"
+    let l:saved_reg_type = getregtype(@")
+
+    execute "normal! yW"
+    let l:pattern = @"
+    if !exists('b:terminal_job_id')
+        echom 'This buffer is not a terminal.'
+        return
+    end
+    call chansend(b:terminal_job_id, "kubectl describe pods " . l:pattern . "|less")
+
+    call setreg(@", l:saved_reg, l:saved_reg_type)
 endfunction
 
 function! CallKubectl(action)
@@ -38,4 +53,4 @@ function! CallKubectl(action)
     call setreg(@", l:saved_reg, l:saved_reg_type)
 endfunction
 
-nnoremap <silent> <leader>a  :call ListPods()<CR>
+nnoremap <silent><unique> <leader>a  :call ListPods()<CR>
