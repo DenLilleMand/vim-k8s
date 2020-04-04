@@ -31,7 +31,7 @@ function! vim_k8s#Describe()
 
     execute "normal! yW"
     let l:pattern = @"
-    call system("kubectl describe pods " . l:pattern . "|" . l:vim_k8s#pager)
+    call system("kubectl describe pods " . l:pattern . "|" . g:vim_k8s#pager)
 
     call setreg(@", l:saved_reg, l:saved_reg_type)
 endfunction
