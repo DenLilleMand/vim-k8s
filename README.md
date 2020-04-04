@@ -9,6 +9,8 @@ have a few options available:
 * `e` - exec into the pod
 * `d` - describe the pod
 
+![](file:examples/example.gif)
+
 ## Configuration
 
 The only global mapping required is `<Plug>(vim_k8s-listpods)`,
