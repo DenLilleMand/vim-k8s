@@ -1,14 +1,7 @@
-echom("herpderp")
 if exists('g:loaded_k8s') || &cp || v:version < 700
   finish
 endif
 let g:loaded_k8s = 1
-
-" Could be useful later for checking compatibility:
-"let s:nvim = has('nvim')
-"let s:async = has('job') && has('channel')
-
-""" Kubernetes plugin -------------------{{{
 
 function! MakeLocList()
     " 0 often means this window like in this case
@@ -57,7 +50,4 @@ function! SelectResource(action)
 endfunction
 
 nnoremap <silent> <leader>a  :call MakeLocList()<CR>
-"nnoremap <silent> <leader>e  :call SelectResource('e')<CR>
-"nnoremap <silent> <leader>d  :call SelectResource('d')<CR>
-"}}}
 
