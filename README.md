@@ -9,7 +9,7 @@ have a few options available:
 * `e` - exec into the pod
 * `d` - describe the pod
 
-![](file:examples/example.gif)
+![herp](file:examples/example.gif)
 
 ## Configuration
 
