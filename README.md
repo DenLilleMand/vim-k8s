@@ -62,11 +62,13 @@ The default is `less`
     Plug 'denlillemand/vim-k8s'
 ```
 
-Source .vimrc or init.vim and run `bash:PlugInstall`
+Source .vimrc or init.vim and run:
+
+```bash
+PlugInstall
+```
 
 ## Prerequisites
 
 This plugin assumes a working `kubectl` command available on your cmdline.
-It also assumes that kubectl has a default context set,
-that you wish to use there is no magic letting you
-select a different context when running the commands.
+It also assumes that kubectl has a default context set
